@@ -12,19 +12,19 @@ class StethoHttpClient implements HttpClient {
   StethoHttpClient(this.client);
 
   @override
-  bool autoUncompress;
+  late bool autoUncompress;
 
   @override
-  Duration idleTimeout;
+  late Duration idleTimeout;
 
   @override
-  Duration connectionTimeout;
+  Duration? connectionTimeout;
 
   @override
-  int maxConnectionsPerHost;
+  int? maxConnectionsPerHost;
 
   @override
-  String userAgent;
+  String? userAgent;
 
   @override
   void addCredentials(
@@ -47,21 +47,21 @@ class StethoHttpClient implements HttpClient {
 
   @override
   set authenticate(
-    Future<bool> Function(Uri url, String scheme, String realm) f,
+    Future<bool> Function(Uri url, String scheme, String? realm)? f,
   ) {
     client.authenticate = f;
   }
 
   @override
   set authenticateProxy(
-    Future<bool> Function(String host, int port, String scheme, String realm) f,
+    Future<bool> Function(String host, int port, String scheme, String? realm)? f,
   ) {
     client.authenticateProxy = f;
   }
 
   @override
   set badCertificateCallback(
-    bool Function(X509Certificate cert, String host, int port) callback,
+    bool Function(X509Certificate cert, String host, int port)? callback,
   ) {
     client.badCertificateCallback = callback;
   }
@@ -114,7 +114,7 @@ class StethoHttpClient implements HttpClient {
   Future<HttpClientRequest> patchUrl(Uri url) => openUrl("patch", url);
 
   @override
-  set findProxy(String Function(Uri url) f) => client.findProxy = f;
+  set findProxy(String Function(Uri url)? f) => client.findProxy = f;
 
   @override
   Future<HttpClientRequest> open(
@@ -169,5 +169,15 @@ class StethoHttpClient implements HttpClient {
     final id = new Uuid().generateV4();
 
     return new StethoHttpClientRequest(request, id);
+  }
+
+  @override
+  set connectionFactory(Future<ConnectionTask<Socket>> Function(Uri url, String proxyHost, int proxyPort)? f) {
+    // TODO: implement connectionFactory
+  }
+
+  @override
+  set keyLog(Function(String line)? callback) {
+    // TODO: implement keyLog
   }
 }

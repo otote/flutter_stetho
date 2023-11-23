@@ -13,24 +13,24 @@ void main() {
 class FlutterStethoExample extends StatelessWidget {
   final http.Client client;
 
-  FlutterStethoExample({Key key, this.client}) : super(key: key);
+  FlutterStethoExample({Key? key, required this.client}) : super(key: key);
 
   fetchImage() {
     client.get(
-      'https://flutter.dev/assets/404/dash_nest-c64796b59b65042a2b40fae5764c13b7477a592db79eaf04c86298dcb75b78ea.png',
+      Uri.parse('https://flutter.dev/assets/404/dash_nest-c64796b59b65042a2b40fae5764c13b7477a592db79eaf04c86298dcb75b78ea.png'),
       headers: {'Authorization': 'token'},
     );
   }
 
   fetchJson() {
     client.get(
-      'https://jsonplaceholder.typicode.com/posts/1',
+      Uri.parse('https://jsonplaceholder.typicode.com/posts/1'),
       headers: {'Authorization': 'token'},
     );
   }
 
   fetchError() {
-    client.get('https://jsonplaceholder.typicode.com/postadsass/1');
+    client.get(Uri.parse('https://jsonplaceholder.typicode.com/postadsass/1'));
   }
 
   @override
@@ -46,21 +46,21 @@ class FlutterStethoExample extends StatelessWidget {
             children: <Widget>[
               new Padding(
                 padding: new EdgeInsets.all(16.0),
-                child: new RaisedButton(
+                child: new TextButton(
                   onPressed: fetchJson,
                   child: new Text("Fetch json"),
                 ),
               ),
               new Padding(
                 padding: new EdgeInsets.all(16.0),
-                child: new RaisedButton(
+                child: new TextButton(
                   onPressed: fetchImage,
                   child: new Text("Fetch image"),
                 ),
               ),
               new Padding(
                 padding: new EdgeInsets.all(16.0),
-                child: new RaisedButton(
+                child: new TextButton(
                   onPressed: fetchError,
                   child: new Text("Fetch with Error"),
                 ),
